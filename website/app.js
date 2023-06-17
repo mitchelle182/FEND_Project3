@@ -12,12 +12,15 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 document.getElementById('generate').addEventListener('click', performCallBack);
     
 /* Function called by event listener */
-function performCallBack(){
+async function performCallBack(){
     const zipCode = document.getElementById('zip').value;
-    getInfo(baseURL, zipCode, apiKey); 
-    const data =  getInfo;
-    postData('/addNew', {temp:data.temp, date:data.date, feelings:data.feelings})
-    .then(retrieveData());
+    feelings = document.getElementById('feelings').value;
+    
+    date= newDate;
+    const data =  await getInfo(baseURL, zipCode, apiKey);
+    
+    postData('/addNew',  {temp:data.main.temp, feelings:feelings, date:date}).then(retrieveData());
+  
 }
 
 /* Function to GET Web API Data*/
@@ -67,7 +70,7 @@ const retrieveData = async () => {
         const allData =  await request.json();
         console.log(allData);
         document.getElementById('temp').innerHTML = Math.round(allData.temp) + 'degrees';
-        document.getElementById('feelings').innerHTML = allData.feelings;
+        document.getElementById('content').innerHTML = allData.feelings;
         document.getElementById('date').innerHTML = allData.date;
     }
     catch(error) {
