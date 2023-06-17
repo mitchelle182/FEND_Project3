@@ -28,7 +28,7 @@ function listening() {
 }
 
 
-const data = [];
+
 //TODO routes
 app.get('/all', getData);
 
@@ -36,18 +36,15 @@ function getData (req, res) {
     res.send(projectData);
     console.log(projectData);
 }
-
+const data = [];
 
 app.post('/addNew', addNew);
 
 function addNew (req, res) {
-    console.log(req.body);
-    newEntry = {
-    temp: req.body.temp,
-    date: req.body.date,
-    feelings: req.body.feelings
-    };
-    projectData.push(newEntry);  
+    projectData['temp'] = req.body.temp;
+    projectData['date'] = req.body.date;
+    projectData['feelings'] = req.body.feelings;
+   
     res.send(projectData);
     console.log(projectData);
 }
